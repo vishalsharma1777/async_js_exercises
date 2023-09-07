@@ -1,11 +1,11 @@
-const callbackFunction = require('./callbackFunction');
-const promiseFunction = require('./promisesFunction');
-const asyncAwaitFunction = require('./AsyncAwaitFunction');
+const callbackFunction = require('./1-CallbackFunction');
+const promiseFunction = require('./2-PromisesFunction');
+const asyncAwaitFunction = require('./3-AsyncAwaitFunction');
 
-const numberOfFiles = 4;
-const directoryPathCallbacks = './CALLBACKS';
-const directoryPathPromises = './PROMISES';
-const directoryPathAsyncAwait = './ASYNC';
+const numberOfFiles = 3;
+const directoryPathCallbacks = './Directories/CALLBACKS';
+const directoryPathPromises = './Directories/PROMISES';
+const directoryPathAsyncAwait = './Directories/ASYNC';
 
 const result = callbackFunction(numberOfFiles, directoryPathCallbacks);
 const result2 = promiseFunction(numberOfFiles, directoryPathPromises);
