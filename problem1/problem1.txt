@@ -1,0 +1,44 @@
+*******************************************************************
+implemented the call back functions
+*******************************************************************
+implemented the promise functions
+*******************************************************************
+FILES CREATED AND DELETED USING Asunc Await.
+*******************************************************************
+Direcotry created successfully
+directory created
+DIRECTORY MADE
+File CALLBACKS/file4.json created successfully
+File CALLBACKS/file1.json created successfully
+File CALLBACKS/file2.json created successfully
+File CALLBACKS/file3.json created successfully
+File PROMISES/file4.json created succesfully
+File PROMISES/file3.json created succesfully
+File PROMISES/file2.json created succesfully
+File PROMISES/file1.json created succesfully
+all the files created
+all files deleted
+File at CALLBACKS/file1.json deleted successfully
+File at CALLBACKS/file2.json deleted successfully
+File at CALLBACKS/file4.json deleted successfully
+File at CALLBACKS/file3.json deleted successfully
+File PROMISES/file2.json deleted yooo.
+File PROMISES/file4.json deleted yooo.
+File PROMISES/file1.json deleted yooo.
+File PROMISES/file3.json deleted yooo.
+[
+  'File ASYNC/file1.json created',
+  'File ASYNC/file2.json created',
+  'File ASYNC/file3.json created',
+  'File ASYNC/file4.json created'
+]
+files created
+All the files are created
+[
+  'File ASYNC/file1.json deleted',
+  'File ASYNC/file2.json deleted',
+  'File ASYNC/file3.json deleted',
+  'File ASYNC/file4.json deleted'
+]
+files deleted
+All the files are deleted
