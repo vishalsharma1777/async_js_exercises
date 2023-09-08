@@ -1,41 +1,16 @@
 const fs = require('fs');
+const readData = require('./util/readData');
+const fileDeletion = require('./util/deleteAFile');
 
 async function deleteFilesFromFilenames(delettingAddress) {
-  let filesToBeDeleted = new Promise((resolve, reject) => {
-    fs.readFile(delettingAddress, 'utf-8', (error, data) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(data);
-      }
-    });
-  });
+  const allFileNames = await readData(delettingAddress);
 
-  const answer = await filesToBeDeleted;
+  let fileNames = allFileNames.split('\r\n');
 
-  let fileNames = [];
-
-  fileNames = answer.split('\r\n');
   console.log(fileNames);
 
-  async function fileDeletion(address) {
-    return new Promise((resolve, reject) => {
-      if (address != '') {
-        fs.unlink(address, (error) => {
-          if (!error) {
-            resolve(`File ${address} deleted`);
-          } else {
-            reject(error);
-          }
-        });
-      } else {
-        resolve('EMPTY FILE NAME');
-      }
-    });
-  }
   async function allDeletion() {
     let deletionPromises = [];
-
     for (let i = 0; i < fileNames.length; i++) {
       const promise = fileDeletion(fileNames[i])
         .then((res) => {
@@ -47,13 +22,12 @@ async function deleteFilesFromFilenames(delettingAddress) {
 
       deletionPromises.push(promise);
     }
-
     await Promise.all(deletionPromises);
   }
 
   allDeletion()
     .then(() => {
-      fs.writeFile(delettingAddress, '', 'utf-8', (error) => {
+      fs.writeFile('filenames.txt', '', 'utf-8', (error) => {
         if (!error) {
           console.log('EMPTIED');
         } else {
@@ -64,6 +38,10 @@ async function deleteFilesFromFilenames(delettingAddress) {
     .catch((error) => {
       console.error(`Error during file deletion: ${error}`);
     });
+  const value = 'THIS IS PART 4 OF PROBLEM 2';
+  const action = 'ALL THE FILES WERE DELETED';
+
+  return { value, action };
 }
 
-deleteFilesFromFilenames('./filenames.txt');
+module.exports = deleteFilesFromFilenames;

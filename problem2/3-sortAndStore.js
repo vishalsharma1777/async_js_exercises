@@ -1,39 +1,13 @@
-const fs = require('fs');
 const addFileName = require('./util/addFileName');
+const readSortAndWrite = require('./util/readSortAndWrite');
+const filesToBeSorted = require('./util/filesToBeSorted');
 
-async function sortFileContent(directoryPath) {
-  let knowYourFiles = new Promise((resolve, reject) => {
-    fs.readdir(directoryPath, (err, files) => {
-      if (err) {
-        reject('files not available');
-      } else {
-        resolve(files);
-      }
-    });
-  });
-  const answer = await knowYourFiles;
+async function sortFileContent() {
+  const fileNamesToBeSorted = await filesToBeSorted('sentences');
 
-  async function readSortAndWrite(address) {
-    return new Promise((resolve, reject) => {
-      fs.readFile(address, 'utf-8', (error, data) => {
-        if (error) {
-          reject();
-          return;
-        }
-        const yo = data.split(' ').sort().join(' ');
-        fs.appendFile('sort.txt', yo + '\n', (error) => {
-          if (!error) {
-            resolve();
-          } else {
-            reject('file cant be sorted');
-          }
-        });
-      });
-    });
-  }
-
-  for (let i = 1; i <= answer.length; i++) {
-    await readSortAndWrite(`./sentences/sentence${i}.txt`)
+  for (let i = 1; i <= fileNamesToBeSorted.length; i++) {
+    const fileName = `./sentences/sentence${i < 10 ? '0' : ''}${i}.txt`;
+    await readSortAndWrite(fileName)
       .then(() => {
         console.log(`File sentence${i}.txt sorted and added.`);
       })
@@ -42,8 +16,11 @@ async function sortFileContent(directoryPath) {
       });
   }
 
-  console.log('ALL THE FILES WERE SORTED');
   addFileName('sort.txt');
-}
+  const value = 'THIS IS PART 3 OF PROBLEM 2';
+  const action = 'ALL THE FILES WERE SORTED';
+  const Resolved = 'SORT.TXT FILE NAME WAS ADDED';
 
+  return { value, Resolved, action };
+}
 module.exports = sortFileContent;

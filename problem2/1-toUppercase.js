@@ -1,54 +1,28 @@
-const { error } = require('console');
-const fs = require('fs');
 const addFileName = require('./util/addFileName');
+const readData = require('./util/readData');
+const { conversionToUppercase } = require('./util/conversion');
+const writingToANewFile = require('./util/writingToANewFile');
 
-async function changeToUppercase(lowercaseFileName, uppercaseFileName) {
-  let readData = new Promise((resolve, reject) => {
-    fs.readFile(lowercaseFileName, 'utf-8', (error, data) => {
-      if (error) {
-        reject();
-        return;
-      } else {
-        resolve(data);
-      }
-    });
-  });
+async function changeToUppercase(lowercaseFileAddress, uppercaseFile) {
+  const dataToBeConverted = await readData(lowercaseFileAddress);
+  const dataConvertedToUppercase =
+    await conversionToUppercase(dataToBeConverted);
 
-  const dataToBeConverted = await readData;
-  //console.log(dataToBeConverted);
+  let creatingNewFile = await writingToANewFile(
+    uppercaseFile,
+    dataConvertedToUppercase,
+    'converted to uppercase and written on a new file.',
+    'error writng the new file.'
+  );
 
-  let convertingToUppercase = new Promise((resolve, reject) => {
-    if (!dataToBeConverted) {
-      reject(error);
-    } else {
-      resolve(dataToBeConverted.toUpperCase());
-    }
-  });
+  let addingTheFileName = await addFileName(uppercaseFile);
 
-  const dataConvertedToUppercase = await convertingToUppercase;
-  //console.log(dataConvertedToUppercase);
-
-  let writingToNewFile = new Promise((resolve, reject) => {
-    fs.writeFile(uppercaseFileName, dataConvertedToUppercase, (error) => {
-      if (!error) {
-        resolve('converted to uppercase and written on a new file.');
-      } else {
-        reject('error writng the new file.');
-      }
-    });
-  });
-
-  addFileName(uppercaseFileName)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-  const isConverstionSuccesfull = await writingToNewFile;
-  console.log(isConverstionSuccesfull);
-  return isConverstionSuccesfull;
+  const value = 'THIS IS PART 1 OF PROBLEM 2';
+  return { value, creatingNewFile, addingTheFileName };
 }
+
+// changeToUppercase('lipsum.txt', 'testing.txt').then((res) => {
+//   console.log(res);
+// });
 
 module.exports = changeToUppercase;

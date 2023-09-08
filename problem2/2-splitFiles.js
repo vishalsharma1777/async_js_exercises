@@ -1,71 +1,36 @@
-const fs = require('fs');
-const { error } = require('console');
 const addFileName = require('./util/addFileName');
+const readData = require('./util/readData');
+const { conversionToLowercase } = require('./util/conversion');
+const writingToANewFile = require('./util/writingToANewFile');
+const splitingToSentences = require('./util/splittingToSentences');
 
-async function spiltFilesFunction(uppercaseFileName) {
-  let readData = new Promise((resolve, reject) => {
-    fs.readFile(uppercaseFileName, 'utf-8', (error, data) => {
-      if (error) {
-        reject();
-        return;
-      } else {
-        resolve(data);
-      }
-    });
-  });
+async function spiltFilesFunction(uppercaseFile) {
+  const dataToBeConverted = await readData(uppercaseFile);
 
-  const dataToBeConverted = await readData;
+  const dataConvertedToLowercase =
+    await conversionToLowercase(dataToBeConverted);
 
-  let convertingToLowercase = new Promise((resolve, reject) => {
-    if (!dataToBeConverted) {
-      reject(error);
-    } else {
-      resolve(dataToBeConverted.toLowerCase());
-    }
-  });
+  let reWritingTheUppercase = await writingToANewFile(
+    uppercaseFile,
+    dataConvertedToLowercase,
+    'Read the new file and converted it to lower case',
+    'error while rewriting with lowerCase'
+  );
 
-  const dataConvertedToLowercase = await convertingToLowercase;
-  //console.log(dataConvertedToUppercase);
+  const arrayOfSentences = String(dataConvertedToLowercase)
+    .split('\n')
+    .join('')
+    .split('. ');
 
-  let changingToLowerCase = new Promise((resolve, reject) => {
-    fs.writeFile(uppercaseFileName, dataConvertedToLowercase, (error) => {
-      if (!error) {
-        resolve('converted the contents of the file to lowercase.');
-      } else {
-        reject('error converting the new file.');
-      }
-    });
-  });
-
-  const dataToBeSplited = String(dataConvertedToLowercase);
-  //console.log(dataToBeSplited);
-
-  const sentence = '. ';
-  const arrayOfSentences = dataToBeSplited.split(sentence);
-  //console.log(arrayOfSentences);
-
-  function testing(i) {
-    fs.writeFile(
-      `./sentences/sentence${i}.txt`,
-      arrayOfSentences[i - 1],
-      (error) => {
-        if (!error) {
-          console.log(`file sentence${i}.txt created`);
-        } else {
-          console.log('cant create files');
-        }
-      }
-    );
+  for (let x = 1; x <= arrayOfSentences.length - 1; x++) {
+    await splitingToSentences(x, arrayOfSentences);
+    const fileName = `./sentences/sentence${x < 10 ? '0' : ''}${x}.txt`;
+    addFileName(fileName);
   }
 
-  for (let x = 1; x <= arrayOfSentences.length; x++) {
-    setTimeout(() => {
-      testing(x);
-      addFileName(`sentences/sentence${x}.txt`);
-    }, 0);
-  }
-
-  changingToLowerCase.then((res) => console.log(res));
+  const value = 'THIS IS PART 2 OF PROBLEM 2';
+  const action = 'SPLITTED THE FILES SENTENCE WISE.';
+  return { value, reWritingTheUppercase, action };
 }
 
 module.exports = spiltFilesFunction;
