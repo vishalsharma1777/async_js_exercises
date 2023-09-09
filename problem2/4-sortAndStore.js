@@ -17,7 +17,7 @@ async function sortFileContent() {
   }
 
   addFileName('sort.txt');
-  const value = 'THIS IS PART 3 OF PROBLEM 2';
+  const value = 'THIS IS PART 4 OF PROBLEM 2';
   const action = 'ALL THE FILES WERE SORTED';
   const Resolved = 'SORT.TXT FILE NAME WAS ADDED';
 

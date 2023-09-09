@@ -81,23 +81,35 @@ function asyncAwaitFunction(numberOfFiles, directoryPath) {
     });
   }
 
-  directoryMaker()
-    .then(() => {
-      console.log('DIRECTORY MADE');
-      return creationOutcome();
-    })
-    .then((res) => {
-      console.log('files created');
-      console.log(res);
-      return deleltionOutcome();
-    })
-    .then((res) => {
-      console.log('files deleted');
-      console.log(res);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  async function createDirectoryAndFiles() {
+    try {
+      const res0 = await directoryMaker();
+      setTimeout(() => {
+        console.log({ res0, action: 'Directory Made' });
+      }, 0);
+
+      const res1 = await creationOutcome();
+      setTimeout(() => {
+        console.log({ res1, action: 'Files Made' });
+      }, 0);
+
+      const res2 = await deleltionOutcome();
+      setTimeout(() => {
+        console.log({ res2, action: 'Files Deleted' });
+      }, 0);
+    } catch (error) {
+      setTimeout(() => {
+        console.log({ error, action: 'Error ' });
+      }, 3000);
+    } finally {
+      setTimeout(() => {
+        console.log({ finally: 'Execution completed.' });
+      }, 0);
+      console.log();
+    }
+  }
+
+  createDirectoryAndFiles();
 
   return 'FILES CREATED AND DELETED USING Asunc Await.';
 }

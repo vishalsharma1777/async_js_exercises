@@ -1,52 +1,75 @@
-//const createFile = require('./util/createFile');
-const changeToUppercase = require('./1-toUppercase');
-const spiltFilesFunction = require('./2-splitFiles');
-const sortFileContent = require('./3-sortAndStore');
-const deleteFilesFromFilenames = require('./4-deleteFiles');
+//const createFile = require('./util/createFile')
+const readFileData = require('./1-readFile');
+const changeToUppercase = require('./2-toUppercase');
+const spiltFilesFunction = require('./3-splitFiles');
+const sortFileContent = require('./4-sortAndStore');
+const deleteFilesFromFilenames = require('./5-deleteFiles');
 
 const lowercaseFileName = 'lipsum.txt';
 const uppercaseFileName = 'uppercase.txt';
 const deletingAddress = 'filenames.txt';
 
-// createFile('./lipsum.txt', 5).then(() => {
-//   console.log('File created');
-//   return;
-// });
-async function main() {
-  changeToUppercase(lowercaseFileName, uppercaseFileName)
-    .then((res) => {
-      setTimeout(() => {
-        console.log(res);
-      }, 3000);
-      return spiltFilesFunction(uppercaseFileName);
-    })
-    .then((res) => {
-      setTimeout(() => {
-        console.log(res);
-      }, 4000);
-      return sortFileContent();
-    })
-    .then((res) => {
-      setTimeout(() => {
-        console.log(res);
-      }, 5000);
-      return deleteFilesFromFilenames(deletingAddress);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+//createFile('testing.txt',5);
 
+async function main() {
+  try {
+    const res0 = await readFileData(lowercaseFileName);
+    setTimeout(() => {
+      console.log({ value: res0.value, action: res0.action });
+    }, 1000);
+
+    const res1 = await changeToUppercase(res0.data, uppercaseFileName);
+    setTimeout(() => {
+      console.log({
+        value: res1.value,
+        action: res1.addTheFileName,
+        outcome: res1.createNewFile
+      });
+    }, 1500);
+
+    const res2 = await spiltFilesFunction(
+      res1.uppercaseData,
+      uppercaseFileName
+    );
+    setTimeout(() => {
+      console.log(res2);
+    }, 2000);
+
+    const res3 = await sortFileContent();
+    setTimeout(() => {
+      console.log(res3);
+    }, 2500);
+
+    const res4 = await deleteFilesFromFilenames(deletingAddress);
+    setTimeout(() => {
+      console.log(res4);
+    }, 3000);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setTimeout(() => {
+      console.log({
+        finally:
+          'I TRIED MY BEST, THIS IS SHOWING IT, THIS WILL SHOW EVEN IF I FAIL OR I PASS'
+      });
+    }, 3500);
+  }
   return {
-    value: 'THIS IS PART 5 OF PROBLEM 2',
+    value: 'THIS IS COMBINATION OF ALL THE STEPS IN PROBLEM 2',
     isResolved: 'THROUGH ONE COMMAND ALL THE ACTIONS ARE PERFORMED.',
     action: 'DONE THE PROBLEM 2 HURRAY!!!'
   };
 }
 
-main()
-  .then((res) => {
+async function allProblems() {
+  try {
+    const res = await main();
     setTimeout(() => {
       console.log(res);
-    }, 7000);
-  })
-  .catch((error) => console.log(error));
+    }, 4000);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+allProblems();

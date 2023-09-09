@@ -1,16 +1,12 @@
 const addFileName = require('./util/addFileName');
-const readData = require('./util/readData');
 const { conversionToLowercase } = require('./util/conversion');
-const writingToANewFile = require('./util/writingToANewFile');
-const splitingToSentences = require('./util/splittingToSentences');
+const writeToANewFile = require('./util/writeToANewFile');
+const splitToSentences = require('./util/splitToSentences');
 
-async function spiltFilesFunction(uppercaseFile) {
-  const dataToBeConverted = await readData(uppercaseFile);
+async function spiltFilesFunction(uppercaseData, uppercaseFile) {
+  const dataConvertedToLowercase = await conversionToLowercase(uppercaseData);
 
-  const dataConvertedToLowercase =
-    await conversionToLowercase(dataToBeConverted);
-
-  let reWritingTheUppercase = await writingToANewFile(
+  let reWriteTheUppercase = await writeToANewFile(
     uppercaseFile,
     dataConvertedToLowercase,
     'Read the new file and converted it to lower case',
@@ -23,14 +19,14 @@ async function spiltFilesFunction(uppercaseFile) {
     .split('. ');
 
   for (let x = 1; x <= arrayOfSentences.length - 1; x++) {
-    await splitingToSentences(x, arrayOfSentences);
+    await splitToSentences(x, arrayOfSentences);
     const fileName = `./sentences/sentence${x < 10 ? '0' : ''}${x}.txt`;
     addFileName(fileName);
   }
 
-  const value = 'THIS IS PART 2 OF PROBLEM 2';
+  const value = 'THIS IS PART 3 OF PROBLEM 2';
   const action = 'SPLITTED THE FILES SENTENCE WISE.';
-  return { value, reWritingTheUppercase, action };
+  return { value, reWriteTheUppercase, action };
 }
 
 module.exports = spiltFilesFunction;

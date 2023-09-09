@@ -38,7 +38,7 @@ async function deleteFilesFromFilenames(delettingAddress) {
     .catch((error) => {
       console.error(`Error during file deletion: ${error}`);
     });
-  const value = 'THIS IS PART 4 OF PROBLEM 2';
+  const value = 'THIS IS PART 5 OF PROBLEM 2';
   const action = 'ALL THE FILES WERE DELETED';
 
   return { value, action };
