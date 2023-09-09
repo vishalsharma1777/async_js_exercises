@@ -1,5 +1,6 @@
 const fs = require('fs');
 const fileNamesAndPaths = require('./util/fileNamesAndPaths');
+//const createIndividualFiles = require('./util/createRandomFile');
 //const { error } = require('console');
 
 function messageShowCallback(message) {
@@ -27,6 +28,10 @@ const callbackFunction = (numberOfFiles, directoryPath) => {
                 console.log(error);
               }
             });
+            console.log(i);
+            // createIndividualFiles(address).then(() => {
+            //   createNextFile(), i++, console.log(i);
+            // });
           } else {
             deleteFiles(filePaths);
           }
